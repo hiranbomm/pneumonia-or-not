@@ -85,7 +85,5 @@ if __name__ == '__main__':
 
     print(perceptron.weights)
 
-    # ??: not sure if this is plotting just the final weights or actually
-    # is evaluating for each label..
-    plot_visualization(perceptron.weights[1:, :], None)
+    plot_visualization(perceptron.weights[1:, :], 'bone')
 

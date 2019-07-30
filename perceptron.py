@@ -16,22 +16,33 @@ class MultiClassPerceptron(object):
         # return which class gives the max result
 
         # weights[0] holds the bias element
-        self.weights = np.zeros(feature_dim + 1)
+        self.weights = np.zeros((feature_dim + 1, NUM_CLASS))
         self.learning_rate = 0.01
         self.threshold = 10  # how many times we want to go through training sets
 
     def prediction(self, img):
 
 
-        sum_w = np.dot(img, self.weights[1:]) + self.weights[0]
+        # sum_w = np.dot(img, self.weights[1:]) + self.weights[0]
+        #
+        # activation = 0
+        #
+        # if sum_w <= 0:
+        #     activation = 1
+        #
+        # return activation
 
-        activation = 0
+        argmax = 0
+        pred_class = 0
 
-        if sum_w <= 0:
-            activation = 1
+        for index in range(len(self.weights[0])):
+            cur_argmax = np.dot(img, self.weights[1:, index])
 
-        return activation
+            if cur_argmax > argmax:
+                argmax = cur_argmax
+                pred_class = index
 
+        return pred_class
 
     def train(self, norm_train, pneu_train):
         """
@@ -53,17 +64,25 @@ class MultiClassPerceptron(object):
             for img in norm_train:
                 pred_class = self.prediction(img)
 
-                # w = w + learning_rate * (expected - predicted) * x
-                self.weights[1:] += self.learning_rate * (expected - pred_class) * img
-                self.weights[0] += self.learning_rate * (expected - pred_class)
+                if pred_class != expected:  # misclassified
+                    self.weights[1:, expected] += self.learning_rate * img
+                    # self.weights[1:, pred_class] -= self.learning_rate * img
+
+                    # w = w + learning_rate * (expected - predicted) * x
+                    # self.weights[1:] += self.learning_rate * (expected - pred_class) * img
+                    # self.weights[0] += self.learning_rate * (expected - pred_class)
 
             expected = 1
             for img in pneu_train:
                 pred_class = self.prediction(img)
 
+                if pred_class != expected:  # misclassified
+                    self.weights[1:, expected] += self.learning_rate * img
+                    # self.weights[1:, pred_class] -= self.learning_rate * img
+
                 # w = w + learning_rate * (expected - predicted) * x
-                self.weights[1:] += self.learning_rate * (expected - pred_class) * img
-                self.weights[0] += self.learning_rate * (expected - pred_class)
+                # self.weights[1:] += self.learning_rate * (expected - pred_class) * img
+                # self.weights[0] += self.learning_rate * (expected - pred_class)
 
     # def test(self, norm_test, pneu_test):
 

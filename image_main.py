@@ -59,14 +59,25 @@ def load_data():
     return norm_train, pneu_train, norm_test, pneu_test
 
 
-def plot_visualization(images, classes, cmap):
+# def plot_visualization(images, classes, cmap):
+#
+#     fig, ax = plt.subplots(2, figsize=(5, 5))
+#     for i in range(len(LABEL_NAMES)):
+#         ax[i%2].imshow(images.reshape((50, 50)), cmap=cmap)
+#         ax[i%2].set_xticks([])
+#         ax[i%2].set_yticks([])
+#         ax[i%2].set_title(classes[i])
+#     plt.show()
 
-    fig, ax = plt.subplots(2, figsize=(5, 5))
+def plot_visualization(images, cmap):
+    """Plot the visualizations
+    """
+    fig, ax = plt.subplots(2, figsize=(12, 5))
     for i in range(len(LABEL_NAMES)):
-        ax[i%2].imshow(images.reshape((50, 50)), cmap=cmap)
+        ax[i%2].imshow(images[:, i].reshape((50, 50)), cmap=cmap)
         ax[i%2].set_xticks([])
         ax[i%2].set_yticks([])
-        ax[i%2].set_title(classes[i])
+        ax[i%2].set_title(LABEL_NAMES[i])
     plt.show()
 
 
@@ -85,5 +96,5 @@ if __name__ == '__main__':
 
     # ??: not sure if this is plotting just the final weights or actually
     # is evaluating for each label..
-    plot_visualization(perceptron.weights[1:], LABEL_NAMES, None)
+    plot_visualization(perceptron.weights[1:, :], None)
 

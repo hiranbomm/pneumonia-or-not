@@ -2,9 +2,6 @@ import numpy as np
 
 NUM_CLASS = 2  # pneumonia or normal
 
-
-
-
 # 0 = normal
 # 1 = pneumonia
 
@@ -21,16 +18,6 @@ class MultiClassPerceptron(object):
         self.threshold = 10  # how many times we want to go through training sets
 
     def prediction(self, img):
-
-
-        # sum_w = np.dot(img, self.weights[1:]) + self.weights[0]
-        #
-        # activation = 0
-        #
-        # if sum_w <= 0:
-        #     activation = 1
-        #
-        # return activation
 
         argmax = 0
         pred_class = 0

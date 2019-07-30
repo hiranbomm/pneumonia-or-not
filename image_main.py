@@ -59,26 +59,17 @@ def load_data():
     return norm_train, pneu_train, norm_test, pneu_test
 
 
-# def plot_visualization(images, classes, cmap):
-#
-#     fig, ax = plt.subplots(2, figsize=(5, 5))
-#     for i in range(len(LABEL_NAMES)):
-#         ax[i%2].imshow(images.reshape((50, 50)), cmap=cmap)
-#         ax[i%2].set_xticks([])
-#         ax[i%2].set_yticks([])
-#         ax[i%2].set_title(classes[i])
-#     plt.show()
-
 def plot_visualization(images, cmap):
-    """Plot the visualizations
-    """
-    fig, ax = plt.subplots(2, figsize=(12, 5))
+
+    fig, ax = plt.subplots(2, figsize=(15, 15))
     for i in range(len(LABEL_NAMES)):
         ax[i%2].imshow(images[:, i].reshape((50, 50)), cmap=cmap)
         ax[i%2].set_xticks([])
         ax[i%2].set_yticks([])
         ax[i%2].set_title(LABEL_NAMES[i])
-    plt.show()
+    # plt.show()
+
+    plt.savefig('training_visualization.png', bbox_inches='tight')
 
 
 if __name__ == '__main__':

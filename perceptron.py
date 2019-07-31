@@ -14,8 +14,8 @@ class MultiClassPerceptron(object):
 
         # weights[0] holds the bias element
         self.weights = np.zeros((feature_dim + 1, NUM_CLASS))
-        self.learning_rate = 0.01
-        self.threshold = 10  # how many times we want to go through training sets
+        self.learning_rate = 1
+        self.threshold = 10000  # how many times we want to go through training sets
 
     def prediction(self, img):
 
@@ -45,6 +45,7 @@ class MultiClassPerceptron(object):
         """
 
         # first go through norm_train
+        print("training")
 
         for iter in range(self.threshold):
             expected = 0
@@ -71,6 +72,29 @@ class MultiClassPerceptron(object):
                 # self.weights[1:] += self.learning_rate * (expected - pred_class) * img
                 # self.weights[0] += self.learning_rate * (expected - pred_class)
 
-    # def test(self, norm_test, pneu_test):
+    def test(self, norm_test, pneu_test):
+        print("testing")
 
+        norm_pred = []
+        pneu_pred = []
 
+        correct = 0
+        incorrect = 0
+        for img in norm_test:
+            pred_class = self.prediction(img)
+            norm_pred.append(pred_class)
+            if pred_class != 0:
+                incorrect += 1
+            else:
+                correct += 1
+        for img in pneu_test:
+            pred_class = self.prediction(img)
+            pneu_pred.append(pred_class)
+            if pred_class != 1:
+                incorrect += 1
+            else:
+                correct += 1
+
+        accuracy = correct/(correct + incorrect)
+
+        return norm_pred, pneu_pred, accuracy

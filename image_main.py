@@ -79,11 +79,12 @@ if __name__ == '__main__':
     norm_train, pneu_train, norm_test, pneu_test = load_data()
 
     feature_dim = WIDTH * HEIGHT
-
     perceptron = MultiClassPerceptron(feature_dim)
     perceptron.train(norm_train, pneu_train)
 
     print(perceptron.weights)
-
     plot_visualization(perceptron.weights[1:, :], 'bone')
 
+    norm_pred, pneu_pred, accuracy = perceptron.test(norm_test, pneu_test)
+
+    print("accuracy: ", accuracy)
